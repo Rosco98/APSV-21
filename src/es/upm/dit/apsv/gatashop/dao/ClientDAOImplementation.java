@@ -2,6 +2,8 @@ package es.upm.dit.apsv.gatashop.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import es.upm.dit.apsv.gatashop.model.Client;
 
 public class ClientDAOImplementation implements ClientDAO {
@@ -17,43 +19,90 @@ public class ClientDAOImplementation implements ClientDAO {
 	
 	@Override
 	public Client create(Client client) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.save(client);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return client;
 	}
 
 	@Override
-	public Client read(String categoryID) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public Client read(String clientID) throws Exception{
+		Client c = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			c = session.get(Client.class, clientID);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return c;
 	}
 
 	@Override
 	public Client update(Client client) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(client);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return client;
 	}
 
 	@Override
 	public Client delete(Client client) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.delete(client);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return client;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Client> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Client> c = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			c = (List<Client>)(session.createQuery("from Clients").list());
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return c;
 	}
 
-	@Override
+	@Override	//Puede haber mas de un cliente con el mismo correo
 	public Client readByEmail(String email) {
-		// TODO Auto-generated method stub
+		for (Client c : this.readAll()) 
+			if (email.equals(c.getEmail()))
+				return c;
 		return null;
 	}
 
-	@Override
+	@Override	//Puede haber mas de un cliente con el mismo user
 	public Client readByUser(String user) {
-		// TODO Auto-generated method stub
+		for (Client c : this.readAll()) 
+			if (user.equals(c.getUser()))
+				return c;
 		return null;
 	}
 

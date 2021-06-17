@@ -6,10 +6,12 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@Table(name="Orders")
 public class Order implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

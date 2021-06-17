@@ -7,7 +7,7 @@ import es.upm.dit.apsv.gatashop.model.Client;
 public interface ClientDAO {
 
 	public Client create (Client client) throws Exception;
-	public Client read (String categoryID) throws Exception;
+	public Client read (String clientID) throws Exception;
 	public Client update (Client client) throws Exception;
 	public Client delete (Client client) throws Exception;
 

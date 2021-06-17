@@ -2,6 +2,10 @@ package es.upm.dit.apsv.gatashop.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.Session;
+
 import es.upm.dit.apsv.gatashop.model.OrderDetail;
 
 public class OrderDetailDAOImplementation implements OrderDetailDAO {
@@ -18,44 +22,109 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 	
 	@Override
 	public OrderDetail create(OrderDetail orderDetail) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.save(orderDetail);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return orderDetail;
 	}
 
 	@Override
 	public OrderDetail read(String orderDetailID) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		OrderDetail o = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			o = session.get(OrderDetail.class, orderDetailID);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return o;
 	}
 
 	@Override
 	public OrderDetail update(OrderDetail orderDetail) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(orderDetail);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return orderDetail;
 	}
 
 	@Override
 	public OrderDetail delete(OrderDetail orderDetail) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.delete(orderDetail);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return orderDetail;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderDetail> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<OrderDetail> o = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			o = (List<OrderDetail>)(session.createQuery("from OrderDetails").list());
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return o;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderDetail> readAllByOrder(String orderID) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OrderDetail> orderDetails = null;
+		Session session = SessionFactoryService.get().openSession();
+		session.beginTransaction();
+		Query q = session.createQuery("SELECT o "
+				+ "FROM Orders o, OrderDetails oD "
+				+ "WHERE o.orderID=\"" + orderID + "\" "
+						+ "AND o.orderID=oD.orderID);");
+		
+		orderDetails = q.getResultList();
+		session.getTransaction().commit();
+		session.close();
+		return orderDetails;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderDetail> readAllByProduct(String productID) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OrderDetail> orderDetails = null;
+		Session session = SessionFactoryService.get().openSession();
+		session.beginTransaction();
+		Query q = session.createQuery("SELECT oD "
+				+ "FROM Products p, OrderDetails oD "
+				+ "WHERE p.productID=\"" + productID + "\" "
+						+ "AND p.productID=oD.productID);");
+		
+		orderDetails = q.getResultList();
+		session.getTransaction().commit();
+		session.close();
+		return orderDetails;
 	}
 
 }

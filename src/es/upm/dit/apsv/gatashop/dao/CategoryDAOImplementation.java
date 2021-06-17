@@ -84,7 +84,7 @@ public class CategoryDAOImplementation implements CategoryDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = (List<Category>)(session.createQuery("from Category").list());
+			c = (List<Category>)(session.createQuery("from Categories").list());
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -99,10 +99,10 @@ public class CategoryDAOImplementation implements CategoryDAO {
 		List<Category> categories = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
-		Query q = session.createQuery("SELECT Categories.CategoryID "
-				+ "FROM Categories, Products "
-				+ "WHERE Products.ProductID=\"" + productID + "\" "
-						+ "AND Products.CategoryID=Categories.CategoryID);");
+		Query q = session.createQuery("SELECT c "
+				+ "FROM Categories c, Products p "
+				+ "WHERE p.ProductID=\"" + productID + "\" "
+						+ "AND p.CategoryID=c.CategoryID);");
 		
 		categories = q.getResultList();
 		session.getTransaction().commit();

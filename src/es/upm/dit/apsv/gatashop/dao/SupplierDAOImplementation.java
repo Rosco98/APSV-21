@@ -2,9 +2,11 @@ package es.upm.dit.apsv.gatashop.dao;
 
 import java.util.List;
 
-import es.upm.dit.apsv.gatashop.model.Shipper;
+import org.hibernate.Session;
 
-public class SupplierDAOImplementation implements ShipperDAO {
+import es.upm.dit.apsv.gatashop.model.Supplier;
+
+public class SupplierDAOImplementation implements SupplierDAO {
 
 	private static SupplierDAOImplementation instance = null;
 	private SupplierDAOImplementation() {}
@@ -17,33 +19,76 @@ public class SupplierDAOImplementation implements ShipperDAO {
 	
 	
 	@Override
-	public Shipper create(Shipper shipper) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public Supplier create(Supplier supplier) throws Exception{
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.save(supplier);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return supplier;
 	}
 
 	@Override
-	public Shipper read(String shipperID) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public Supplier read(String supplierID) throws Exception{
+		Supplier s = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			s = session.get(Supplier.class, supplierID);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return s;
 	}
 
 	@Override
-	public Shipper update(Shipper shipper) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public Supplier update(Supplier supplier) throws Exception{
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(supplier);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return supplier;
 	}
 
 	@Override
-	public Shipper delete(Shipper shipper) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public Supplier delete(Supplier supplier) throws Exception{
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			session.delete(supplier);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return supplier;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Shipper> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Supplier> readAll() {
+		List<Supplier> s = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			s = (List<Supplier>)(session.createQuery("from Suppliers").list());
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return s;
 	}
 
 }

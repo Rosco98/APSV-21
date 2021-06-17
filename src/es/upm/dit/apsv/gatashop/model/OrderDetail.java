@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="OrderDetails")
 public class OrderDetail implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

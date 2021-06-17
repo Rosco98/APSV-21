@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Suppliers")
 public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
