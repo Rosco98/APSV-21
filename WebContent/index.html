@@ -9,20 +9,19 @@
 </head>
 <body>
 	<h2>Acceder a cuenta existente</h2>
-	<form action="FormLoginServlet">
-		<input type="text" name="email" placeholder="Email"> <input
-			type="password" name="password" placeholder="Password">
-		<button type="submit">Login</button>
-	</form>
+	
 
-	<h2>Solicitar un nuevo TFG</h2>
-	<form action="Form1TFGServlet">
-		<input type="text" name="email" placeholder="Email"> <input
-			type="password" name="password" placeholder="Password"> <input
-			type="text" name="name" placeholder="Nombre y apellidos"> <input
-			type="text" name="titulo" placeholder="Título del proyecto">
-		<input type="text" name="profesor" placeholder="Profesor tutor">
-		<button type="submit">Registrar</button>
+
+<!-- Al hacer la tabla de productos, recordar usar funciones iterator, no array --> 
+
+	<h2>Tabla de productos</h2>
+	<form action="Form2ProfesorServlet" method="get">
+		<table border="1">
+			<tr>
+				<td>${iteratorProducts.next().name}</td>
+				<td>${iteratorProducts.next().price}</td>
+			</tr>
+		</table>
 	</form>
 
 
