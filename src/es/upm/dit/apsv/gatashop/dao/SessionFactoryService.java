@@ -1,6 +1,8 @@
 package es.upm.dit.apsv.gatashop.dao;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import es.upm.dit.apsv.gatashop.model.Product;
  
 public class SessionFactoryService {
 

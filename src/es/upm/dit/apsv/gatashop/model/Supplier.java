@@ -1,20 +1,26 @@
 package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="Suppliers")
+@Table(name="SUPPLIERS")
 public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id  @OneToMany(mappedBy = "supplierID", fetch = FetchType.EAGER)
-	private String supplierID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	private String name;
 	private String contactName;
 	private String email;
@@ -23,6 +29,9 @@ public class Supplier implements Serializable {
 	private String city;
 	private String address;
 	private String postalCode;
+	
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER)
+	private List<Product> suppliedProducts;
 
 	//Constructor//
 	public Supplier() {
@@ -34,8 +43,8 @@ public class Supplier implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getSupplierID() {
-		return supplierID;
+	public Long getId() {
+		return id;
 	}
 	public String getName() {
 		return name;
@@ -61,11 +70,14 @@ public class Supplier implements Serializable {
 	public String getPostalCode() {
 		return postalCode;
 	}
+	public List<Product> getSuppliedProducts() {
+		return suppliedProducts;
+	}
 
 	
 	//Setters//
-	public void setSupplierID(String supplierID) {
-		this.supplierID = supplierID;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -91,14 +103,17 @@ public class Supplier implements Serializable {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
+	public void setSuppliedProducts(List<Product> suppliedProducts) {
+		this.suppliedProducts = suppliedProducts;
+	}
 
 	
 	//toString//
 	@Override
 	public String toString() {
-		return "Supplier [supplierID=" + supplierID + ", name=" + name + ", contactName=" + contactName + ", email="
+		return "Supplier [id=" + id + ", name=" + name + ", contactName=" + contactName + ", email="
 				+ email + ", phone=" + phone + ", country=" + country + ", city=" + city + ", address=" + address
-				+ ", postalCode=" + postalCode + "]";
+				+ ", postalCode=" + postalCode +  ", suppliedProducts=" + suppliedProducts + "]";
 	}
 
 	//HashCode//
@@ -114,7 +129,8 @@ public class Supplier implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
-		result = prime * result + ((supplierID == null) ? 0 : supplierID.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((suppliedProducts == null) ? 0 : suppliedProducts.hashCode());
 		return result;
 	}
 
@@ -168,18 +184,18 @@ public class Supplier implements Serializable {
 				return false;
 		} else if (!postalCode.equals(other.postalCode))
 			return false;
-		if (supplierID == null) {
-			if (other.supplierID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!supplierID.equals(other.supplierID))
+		} else if (!id.equals(other.id))
+			return false;
+		if (suppliedProducts == null) {
+			if (other.suppliedProducts != null)
+				return false;
+		} else if (!suppliedProducts.equals(suppliedProducts))
 			return false;
 		return true;
 	}
 	
-	
-	
-	
-	
-
 }
 

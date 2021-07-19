@@ -1,29 +1,43 @@
 package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="Orders")
+@Table(name="ORDERS")
 public class Order implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	private String orderID;
-	@ManyToOne
-	private String clientID;
-	@ManyToOne
-	private String ShipperID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date orderDate;
+	private Calendar orderDate;
+	
+	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	private List<OrderDetail> orderDetails;
+	
+	@ManyToOne (cascade = CascadeType.ALL)
+	private Client client;
+	@ManyToOne (cascade = CascadeType.ALL)
+	private Shipper shipper;
+	
+	
+
 	
 	//Constructor//
 	public Order() {
@@ -36,65 +50,63 @@ public class Order implements Serializable{
 		return serialVersionUID;
 	}
 
-	public String getOrderID() {
-		return orderID;
+	public Long getId() {
+		return id;
 	}
-
-	public String getClientID() {
-		return clientID;
+	public Client getClient() {
+		return client;
 	}
-
-	public String getShipperID() {
-		return ShipperID;
+	public Shipper getShipper() {
+		return shipper;
 	}
-
-	public Date getOrderDate() {
+	public Calendar getOrderDate() {
 		return orderDate;
 	}
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
 	
 	//Setters//
-
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
-	public void setClientID(String clientID) {
-		this.clientID = clientID;
+	public void setClient(Client client) {
+		this.client = client;
 	}
-
-	public void setShipperID(String shipperID) {
-		ShipperID = shipperID;
+	public void setShipper(Shipper shipper) {
+		this.shipper = shipper;
 	}
-
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(Calendar orderDate) {
 		this.orderDate = orderDate;
 	}
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 
 
-	
 	//toString//
 	@Override
 	public String toString() {
-		return "Orders [orderID=" + orderID + ", clientID=" + clientID + ", ShipperID=" + ShipperID + ", orderDate="
-				+ orderDate + "]";
+		return "Order [id=" + id + ", client=" + client + ", shipper=" + shipper + ", orderDate=" + orderDate
+				+ ", orderDetails=" + orderDetails + "]";
 	}
 
 
-	
-	//hashCode//
+	//HashCode//
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ShipperID == null) ? 0 : ShipperID.hashCode());
-		result = prime * result + ((clientID == null) ? 0 : clientID.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((orderDate == null) ? 0 : orderDate.hashCode());
-		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
+		result = prime * result + ((orderDetails == null) ? 0 : orderDetails.hashCode());
+		result = prime * result + ((shipper == null) ? 0 : shipper.hashCode());
 		return result;
 	}
 
 
-	
 	//Equals//
 	@Override
 	public boolean equals(Object obj) {
@@ -105,32 +117,34 @@ public class Order implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (ShipperID == null) {
-			if (other.ShipperID != null)
+		if (client == null) {
+			if (other.client != null)
 				return false;
-		} else if (!ShipperID.equals(other.ShipperID))
+		} else if (!client.equals(other.client))
 			return false;
-		if (clientID == null) {
-			if (other.clientID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!clientID.equals(other.clientID))
+		} else if (!id.equals(other.id))
 			return false;
 		if (orderDate == null) {
 			if (other.orderDate != null)
 				return false;
 		} else if (!orderDate.equals(other.orderDate))
 			return false;
-		if (orderID == null) {
-			if (other.orderID != null)
+		if (orderDetails == null) {
+			if (other.orderDetails != null)
 				return false;
-		} else if (!orderID.equals(other.orderID))
+		} else if (!orderDetails.equals(other.orderDetails))
+			return false;
+		if (shipper == null) {
+			if (other.shipper != null)
+				return false;
+		} else if (!shipper.equals(other.shipper))
 			return false;
 		return true;
 	}
 
-	
-	
-	
-	
+
 
 }

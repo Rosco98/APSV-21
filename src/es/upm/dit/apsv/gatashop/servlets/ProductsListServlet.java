@@ -1,6 +1,7 @@
 package es.upm.dit.apsv.gatashop.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 
 import es.upm.dit.apsv.gatashop.dao.SessionFactoryService;
+import es.upm.dit.apsv.gatashop.model.Product;
 
 /**
  * Servlet implementation class ProductsList
@@ -35,11 +37,11 @@ public class ProductsListServlet extends HttpServlet {
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		
-		Iterator prod = (Iterator) session.createQuery("SELECT * FROM Products").list().iterator();
+		ArrayList<Product> prod = (ArrayList<Product>) session.createQuery("SELECT * FROM PRODUCTS").list();
 		if(prod != null) {
-			request.setAttribute("iteratorProducts", prod);
+			request.setAttribute("arrayListProducts", prod);
 		}
-		getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	/**

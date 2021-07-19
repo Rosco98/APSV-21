@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,11 +21,11 @@
 	<h2>Tabla de productos</h2>
 	<form action="ProductsListServlet" method="get">
 		<table border="1">
-			<tr>
-				<s:iterator value="iteratorProducts" >
-					<td><s:property/></td>
-				</s:iterator>
-			</tr>
+			<c:forEach items="${arrayListProducts}" var="arrayListProductsi">
+				<tr>
+					<td>${arrayListProductsi.name}</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</form>
 

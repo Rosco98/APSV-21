@@ -2,25 +2,28 @@ package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+//AAAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="OrderDetails")
+@Table(name="ORDERDETAILS")
 public class OrderDetail implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
 	
-	@Id
-	private String orderDetailID;
-	@ManyToOne
-	private String orderID;
-	@ManyToOne
-	private String productID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	private int quantity;
+	@ManyToOne (cascade = CascadeType.ALL)
+	private Order order;
+	@ManyToOne (cascade = CascadeType.ALL)
+	private Product product;
 	
 	
 	//Constructor//
@@ -33,28 +36,28 @@ public class OrderDetail implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getOrderDetailID() {
-		return orderDetailID;
+	public Long getId() {
+		return id;
 	}
-	public String getOrderID() {
-		return orderID;
+	public Order getOrder() {
+		return order;
 	}
-	public String getProductID() {
-		return productID;
+	public Product getProduct() {
+		return product;
 	}
 	public int getQuantity() {
 		return quantity;
 	}
 	
 	//Setters//
-	public void setOrderDetailID(String orderDetailID) {
-		this.orderDetailID = orderDetailID;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
-	public void setProductID(String productID) {
-		this.productID = productID;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
@@ -66,7 +69,7 @@ public class OrderDetail implements Serializable{
 	//toString//
 	@Override
 	public String toString() {
-		return "OrderDetails [orderDetailID=" + orderDetailID + ", orderID=" + orderID + ", productID=" + productID
+		return "OrderDetails [id=" + id + ", order=" + order + ", product=" + product
 				+ ", quantity=" + quantity + "]";
 	}
 
@@ -78,9 +81,9 @@ public class OrderDetail implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((orderDetailID == null) ? 0 : orderDetailID.hashCode());
-		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
-		result = prime * result + ((productID == null) ? 0 : productID.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
@@ -97,29 +100,24 @@ public class OrderDetail implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderDetail other = (OrderDetail) obj;
-		if (orderDetailID == null) {
-			if (other.orderDetailID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!orderDetailID.equals(other.orderDetailID))
+		} else if (!id.equals(other.id))
 			return false;
-		if (orderID == null) {
-			if (other.orderID != null)
+		if (order == null) {
+			if (other.order != null)
 				return false;
-		} else if (!orderID.equals(other.orderID))
+		} else if (!order.equals(other.order))
 			return false;
-		if (productID == null) {
-			if (other.productID != null)
+		if (product == null) {
+			if (other.product != null)
 				return false;
-		} else if (!productID.equals(other.productID))
+		} else if (!product.equals(other.product))
 			return false;
 		if (quantity != other.quantity)
 			return false;
 		return true;
 	}
-
-	
-	
-
-	
 
 }

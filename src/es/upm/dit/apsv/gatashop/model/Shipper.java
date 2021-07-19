@@ -1,24 +1,30 @@
 package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="Shippers")
+@Table(name="SHIPPERS")
 public class Shipper implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id  @OneToMany(mappedBy = "shipperID", fetch = FetchType.EAGER)
-	private String shipperID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	private String name;
 	private String phone;
 	private String email;
+	
+	@OneToMany(mappedBy = "shipper", fetch = FetchType.EAGER)
+	private List<Order> shipments;
 	
 	
 	//Constructor//
@@ -31,8 +37,8 @@ public class Shipper implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getShipperID() {
-		return shipperID;
+	public Long getId() {
+		return id;
 	}
 	public String getName() {
 		return name;
@@ -42,12 +48,15 @@ public class Shipper implements Serializable{
 	}
 	public String getEmail() {
 		return email;
+	}	
+	public List<Order> getShipments() {
+		return shipments;
 	}
 	
 	
 	//Setters//
-	public void setShipperID(String shipperID) {
-		this.shipperID = shipperID;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -58,11 +67,16 @@ public class Shipper implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public void setShipments(List<Order> shipments) {
+		this.shipments = shipments;
+	}
+	
 
 	//toString//
 	@Override
 	public String toString() {
-		return "Suppliers [shipperID=" + shipperID + ", name=" + name + ", phone=" + phone + ", email=" + email + "]";
+		return "Suppliers [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + 
+				", shipments=" + shipments + "]";
 	}
 
 	//HashCode//
@@ -73,7 +87,8 @@ public class Shipper implements Serializable{
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-		result = prime * result + ((shipperID == null) ? 0 : shipperID.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((shipments == null) ? 0 : shipments.hashCode());
 		return result;
 	}
 
@@ -102,10 +117,15 @@ public class Shipper implements Serializable{
 				return false;
 		} else if (!phone.equals(other.phone))
 			return false;
-		if (shipperID == null) {
-			if (other.shipperID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!shipperID.equals(other.shipperID))
+		} else if (!id.equals(other.id))
+			return false;
+		if (shipments == null) {
+			if (other.shipments != null)
+				return false;
+		} else if (!shipments.equals(other.shipments))
 			return false;
 		return true;
 	}

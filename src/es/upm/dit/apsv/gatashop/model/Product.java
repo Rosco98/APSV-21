@@ -1,31 +1,42 @@
 package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+//AAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="Products")
+@Table(name="PRODUCTS")
 public class Product implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	
-	@Id @OneToMany(mappedBy = "productID", fetch = FetchType.EAGER)
-	private String productID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	private String name;
-	@ManyToOne
-	private String supplierID;
-	@ManyToMany(mappedBy = "categoryID", fetch = FetchType.EAGER)
-	private String categoryID;
 	private String unit;
 	private double price;
+	
+	@ManyToOne (cascade = CascadeType.ALL)
+	private Supplier supplier;
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+	private List<OrderDetail> orderDetails;
+	
+	@ManyToMany
+	private List<Category> categories;
+	
+	@ManyToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+	private List<Client> customers;
 	
 	//Constructor//
 	public Product() {
@@ -37,17 +48,14 @@ public class Product implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getProductID() {
-		return productID;
+	public Long getId() {
+		return id;
 	}
 	public String getName() {
 		return name;
 	}
-	public String getSupplierID() {
-		return supplierID;
-	}
-	public String getCategoryID() {
-		return categoryID;
+	public Supplier getSupplier() {
+		return supplier;
 	}
 	public String getUnit() {
 		return unit;
@@ -55,19 +63,25 @@ public class Product implements Serializable{
 	public double getPrice() {
 		return price;
 	}
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+	public List<Category> getCategories() {
+		return categories;
+	}
+	public List<Client> getCustomers() {
+		return customers;
+	}
 	
 	//Setters//
-	public void setProductID(String productID) {
-		this.productID = productID;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setSupplierID(String supplierID) {
-		this.supplierID = supplierID;
-	}
-	public void setCategoryID(String categoryID) {
-		this.categoryID = categoryID;
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
@@ -75,32 +89,46 @@ public class Product implements Serializable{
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	public void setCustomers(List<Client> customers) {
+		this.customers = customers;
+	}
 	
 	
 	
 	//toString//
 	@Override
 	public String toString() {
-		return "Product [productID=" + productID + ", name=" + name + ", supplierID=" + supplierID + ", categoryID="
-				+ categoryID + ", unit=" + unit + ", price=" + price + "]";
+		return "Product [id=" + id + ", name=" + name + ", supplier=" + supplier + ", unit=" + unit + 
+				", price=" + price + ", orderDetails=" + orderDetails +", categories=" + categories + 
+				", customers=" + customers + "]";
 	}
-	
-	
+
+
+
 	//HashCode//
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categoryID == null) ? 0 : categoryID.hashCode());
+		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
+		result = prime * result + ((customers == null) ? 0 : customers.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((productID == null) ? 0 : productID.hashCode());
-		result = prime * result + ((supplierID == null) ? 0 : supplierID.hashCode());
+		result = prime * result + ((supplier == null) ? 0 : supplier.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+		result = prime * result + ((orderDetails == null) ? 0 : orderDetails.hashCode());
 		return result;
 	}
+	
 	
 	//Equals//
 	@Override
@@ -112,10 +140,15 @@ public class Product implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (categoryID == null) {
-			if (other.categoryID != null)
+		if (categories == null) {
+			if (other.categories != null)
 				return false;
-		} else if (!categoryID.equals(other.categoryID))
+		} else if (!categories.equals(other.categories))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -124,32 +157,27 @@ public class Product implements Serializable{
 			return false;
 		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
-		if (productID == null) {
-			if (other.productID != null)
+		if (supplier == null) {
+			if (other.supplier != null)
 				return false;
-		} else if (!productID.equals(other.productID))
-			return false;
-		if (supplierID == null) {
-			if (other.supplierID != null)
-				return false;
-		} else if (!supplierID.equals(other.supplierID))
+		} else if (!supplier.equals(other.supplier))
 			return false;
 		if (unit == null) {
 			if (other.unit != null)
 				return false;
 		} else if (!unit.equals(other.unit))
 			return false;
+		if (customers == null) {
+			if (other.customers != null)
+				return false;
+		} else if (!customers.equals(other.customers))
+			return false;
+		if (orderDetails == null) {
+			if (other.orderDetails != null)
+				return false;
+		} else if (!orderDetails.equals(other.orderDetails))
+			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

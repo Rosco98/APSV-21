@@ -2,21 +2,25 @@ package es.upm.dit.apsv.gatashop.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+//AAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
-@Table(name="Clients")
+@Table(name="CLIENTS")
 public class Client implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id  @OneToMany(mappedBy = "clientID", fetch = FetchType.EAGER)
-	private String clientID;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
 	private String email;
 	private String user;
 	private String password;
@@ -24,7 +28,13 @@ public class Client implements Serializable{
 	private String city;
 	private String address;
 	private String postalCode;
-	private ArrayList<Product> cart;
+	
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	private List<Order> orders;
+	
+	@ManyToMany
+	private List<Product> cart;
+	
 	
 	//Constructor//
 	public Client() {
@@ -32,8 +42,8 @@ public class Client implements Serializable{
 	}
 	
 	//Getters//
-	public String getClientID() {
-		return clientID;
+	public Long getId() {
+		return id;
 	}
 	public String getEmail() {
 		return email;
@@ -56,13 +66,17 @@ public class Client implements Serializable{
 	public String getPostalCode() {
 		return postalCode;
 	}
-	public ArrayList<Product> getCart() {
+	public List<Product> getCart() {
 		return cart;
 	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 
 	//Setters//
-	public void setClientID(String clientID) {
-		this.clientID = clientID;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -79,23 +93,25 @@ public class Client implements Serializable{
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public void setaddress(String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-
-	public void setCart(ArrayList<Product> cart) {
+	public void setCart(List<Product> cart) {
 		this.cart = cart;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 		
 	//toString//
 	@Override
 	public String toString() {
-		return "Client [clientID=" + clientID + ", email=" + email + ", user=" + user + ", password=" + password
+		return "Client [id=" + id + ", email=" + email + ", user=" + user + ", password=" + password
 				+ ", country=" + country + ", city=" + city + ", address=" + address + ", postalCode=" + postalCode
-				+ ", cart=" + cart + "]";
+				+ ", cart=" + cart + ", orders=" + orders + "]";
 	}
 
 	
@@ -107,12 +123,13 @@ public class Client implements Serializable{
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((clientID == null) ? 0 : clientID.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		return result;
 	}
 
@@ -142,10 +159,10 @@ public class Client implements Serializable{
 				return false;
 		} else if (!city.equals(other.city))
 			return false;
-		if (clientID == null) {
-			if (other.clientID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!clientID.equals(other.clientID))
+		} else if (!id.equals(other.id))
 			return false;
 		if (country == null) {
 			if (other.country != null)
@@ -171,6 +188,11 @@ public class Client implements Serializable{
 			if (other.user != null)
 				return false;
 		} else if (!user.equals(other.user))
+			return false;
+		if (orders == null) {
+			if (other.orders != null)
+				return false;
+		} else if (!orders.equals(other.orders))
 			return false;
 		return true;
 	}
