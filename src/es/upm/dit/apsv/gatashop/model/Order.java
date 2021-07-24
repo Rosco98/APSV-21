@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,17 +24,19 @@ public class Order implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar orderDate;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-	private List<OrderDetail> orderDetails;
+	private List<OrderDetail> details;
 	
 	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "orders", insertable=true, updatable=false)
 	private Client client;
 	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "shipments", insertable=true, updatable=false)
 	private Shipper shipper;
 	
 	
@@ -62,8 +65,8 @@ public class Order implements Serializable{
 	public Calendar getOrderDate() {
 		return orderDate;
 	}
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
+	public List<OrderDetail> getDetails() {
+		return details;
 	}
 
 	
@@ -80,8 +83,8 @@ public class Order implements Serializable{
 	public void setOrderDate(Calendar orderDate) {
 		this.orderDate = orderDate;
 	}
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setDetails(List<OrderDetail> details) {
+		this.details = details;
 	}
 
 
@@ -89,7 +92,7 @@ public class Order implements Serializable{
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", client=" + client + ", shipper=" + shipper + ", orderDate=" + orderDate
-				+ ", orderDetails=" + orderDetails + "]";
+				+ ", details=" + details + "]";
 	}
 
 
@@ -101,7 +104,7 @@ public class Order implements Serializable{
 		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((orderDate == null) ? 0 : orderDate.hashCode());
-		result = prime * result + ((orderDetails == null) ? 0 : orderDetails.hashCode());
+		result = prime * result + ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((shipper == null) ? 0 : shipper.hashCode());
 		return result;
 	}
@@ -132,10 +135,10 @@ public class Order implements Serializable{
 				return false;
 		} else if (!orderDate.equals(other.orderDate))
 			return false;
-		if (orderDetails == null) {
-			if (other.orderDetails != null)
+		if (details == null) {
+			if (other.details != null)
 				return false;
-		} else if (!orderDetails.equals(other.orderDetails))
+		} else if (!details.equals(other.details))
 			return false;
 		if (shipper == null) {
 			if (other.shipper != null)

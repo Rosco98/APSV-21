@@ -12,14 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
 @Table(name="SUPPLIERS")
 public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String name;
 	private String contactName;
@@ -111,10 +111,11 @@ public class Supplier implements Serializable {
 	//toString//
 	@Override
 	public String toString() {
-		return "Supplier [id=" + id + ", name=" + name + ", contactName=" + contactName + ", email="
-				+ email + ", phone=" + phone + ", country=" + country + ", city=" + city + ", address=" + address
-				+ ", postalCode=" + postalCode +  ", suppliedProducts=" + suppliedProducts + "]";
+		return "Supplier [id=" + id + ", name=" + name + ", contactName=" + contactName + ", email=" + email
+				+ ", phone=" + phone + ", country=" + country + ", city=" + city + ", address=" + address
+				+ ", postalCode=" + postalCode + ", suppliedProducts=" + suppliedProducts + "]";
 	}
+
 
 	//HashCode//
 	@Override

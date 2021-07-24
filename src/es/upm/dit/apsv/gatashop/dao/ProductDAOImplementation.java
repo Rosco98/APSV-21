@@ -6,7 +6,9 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
+import es.upm.dit.apsv.gatashop.model.Category;
 import es.upm.dit.apsv.gatashop.model.Product;
+import es.upm.dit.apsv.gatashop.model.Supplier;
 
 public class ProductDAOImplementation implements ProductDAO {
 	
@@ -36,12 +38,12 @@ public class ProductDAOImplementation implements ProductDAO {
 	}
 
 	@Override
-	public Product read(String productID) throws Exception{
+	public Product read(Long id) throws Exception{
 		Product p = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			p = session.get(Product.class, productID);
+			p = session.get(Product.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -80,12 +82,12 @@ public class ProductDAOImplementation implements ProductDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> readAll() {
+	public List<Product> readAll() throws Exception{
 		List<Product> p = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			p = (List<Product>)(session.createQuery("from Products").list());
+			p = session.createQuery("FROM Product").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -96,14 +98,13 @@ public class ProductDAOImplementation implements ProductDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> readAllByCategory(String categoryID) {
+	public List<Product> readAllByCategory(Category category) {
 		List<Product> products = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT p "
-				+ "FROM Products p, Categories c "
-				+ "WHERE c.categoryID=\"" + categoryID + "\" "
-						+ "AND c.categoryID=p.categoryID);");
+				+ "FROM Product p, Category c "
+				+ "WHERE c.ID=\"" + category.getId() + ";");
 		
 		products = q.getResultList();
 		session.getTransaction().commit();
@@ -113,14 +114,13 @@ public class ProductDAOImplementation implements ProductDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> readAllBySupplier(String supplierID) {
+	public List<Product> readAllBySupplier(Supplier supplier) {
 		List<Product> products = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT p "
-				+ "FROM Products p, Suppliers s "
-				+ "WHERE Suppliers.supplierID=\"" + supplierID + "\" "
-						+ "AND Supplier.supplierID=Products.supplierID);");
+				+ "FROM Product p, Supplier s "
+				+ "WHERE s.id=\"" + supplier.getId() + ";");
 		
 		products = q.getResultList();
 		session.getTransaction().commit();

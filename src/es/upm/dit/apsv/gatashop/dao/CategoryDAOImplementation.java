@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import es.upm.dit.apsv.gatashop.model.Category;
+import es.upm.dit.apsv.gatashop.model.Product;
 
 
 public class CategoryDAOImplementation implements CategoryDAO {
@@ -35,12 +36,12 @@ public class CategoryDAOImplementation implements CategoryDAO {
 	}
 
 	@Override
-	public Category read(String categoryID) throws Exception{
+	public Category read(Long id) throws Exception{
 		Category c = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = session.get(Category.class, categoryID);
+			c = session.get(Category.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -84,7 +85,7 @@ public class CategoryDAOImplementation implements CategoryDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = (List<Category>)(session.createQuery("from Categories").list());
+			c = session.createQuery("FROM Category").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -95,14 +96,13 @@ public class CategoryDAOImplementation implements CategoryDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Category> readAllByProduct(String productID) {
+	public List<Category> readAllByProduct(Product product) {
 		List<Category> categories = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT c "
-				+ "FROM Categories c, Products p "
-				+ "WHERE p.ProductID=\"" + productID + "\" "
-						+ "AND p.CategoryID=c.CategoryID);");
+				+ "FROM Category c, Product p "
+				+ "WHERE p.ID=" + product.getId() + " ;");
 		
 		categories = q.getResultList();
 		session.getTransaction().commit();

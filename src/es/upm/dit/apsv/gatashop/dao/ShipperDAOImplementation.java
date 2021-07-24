@@ -33,12 +33,12 @@ public class ShipperDAOImplementation implements ShipperDAO {
 	}
 
 	@Override
-	public Shipper read(String shipperID) throws Exception{
+	public Shipper read(Long id) throws Exception{
 		Shipper s = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = session.get(Shipper.class, shipperID);
+			s = session.get(Shipper.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -82,7 +82,7 @@ public class ShipperDAOImplementation implements ShipperDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = (List<Shipper>)(session.createQuery("from Shippers").list());
+			s = session.createQuery("FROM Shipper").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

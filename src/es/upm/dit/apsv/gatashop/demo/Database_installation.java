@@ -24,7 +24,7 @@ public class Database_installation {
 		// TODO Auto-generated method stub
 
 		try {
-			
+			//AAAAAAAAAAAAAAAAA
 			//Creacion objetos//
 			Category cat1 = new Category();
 			Product p1 = new Product();
@@ -36,7 +36,7 @@ public class Database_installation {
 			
 			
 			//Category//
-			//cat1.setId((long) Math.random()*10000);
+			cat1.setId((long) (Math.random()*10000));
 			cat1.setName("Frutas");
 			cat1.setDescription("descripcion frutas");		
 			List<Product> productsAssociated = new ArrayList();
@@ -45,7 +45,7 @@ public class Database_installation {
 			
 			
 			//Product//
-			//p1.setId((long) Math.random()*10000);
+			p1.setId((long) (Math.random()*10000));
 			p1.setName("Platano");
 			p1.setPrice(3);
 			p1.setUnit("pack de 6");
@@ -60,7 +60,7 @@ public class Database_installation {
 			
 			
 			//Supplier//
-			//s1.setId((long) Math.random()*10000);
+			s1.setId((long) (Math.random()*10000));
 			s1.setEmail("supplier@gmail.com");
 			s1.setName("Supi");
 			s1.setPhone("+34722512031");
@@ -75,25 +75,25 @@ public class Database_installation {
 			
 			
 			//OrderDetail//
-			//od1.setId((long) Math.random()*10000);
+			od1.setId((long) (Math.random()*10000));
 			od1.setOrder(o1);
 			od1.setProduct(p1);
 			od1.setQuantity(1);
 			
 			
 			//Order//
-			//o1.setId((long) Math.random()*10000);
+			o1.setId((long) (Math.random()*10000));
 			o1.setOrderDate(java.util.Calendar.getInstance());
 			o1.setClient(c1);
 			o1.setShipper(sh1);
 			List<OrderDetail> orderDetails = new ArrayList();
 			orderDetails.add(od1);
-			o1.setOrderDetails(orderDetails);
+			o1.setDetails(orderDetails);
 			
 			
 			
 			//Client//
-			//c1.setId((long) Math.random()*10000);
+			c1.setId((long) (Math.random()*10000));
 			c1.setEmail("jorge@gmail.com");
 			c1.setPassword("paco");
 			c1.setUser("Paco");
@@ -111,7 +111,7 @@ public class Database_installation {
 			
 			
 			//Shipper//
-			//sh1.setId((long) Math.random()*10000);
+			sh1.setId((long) (Math.random()*10000));
 			sh1.setName("Correos");
 			sh1.setEmail("mercadona@gmail.com");
 			sh1.setPhone("+34999999999");

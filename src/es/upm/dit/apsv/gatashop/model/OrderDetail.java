@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-//AAAAAAAAAAAAAAAAAAAAAAA
+//AAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
 @Table(name="ORDERDETAILS")
 public class OrderDetail implements Serializable{
@@ -17,12 +18,14 @@ public class OrderDetail implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	
-	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private int quantity;
 	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "details", insertable=true, updatable=false)
 	private Order order;
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "orderDetails", insertable=true, updatable=false)
 	private Product product;
 	
 	

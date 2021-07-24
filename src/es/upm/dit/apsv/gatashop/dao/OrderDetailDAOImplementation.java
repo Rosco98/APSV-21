@@ -6,7 +6,9 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
+import es.upm.dit.apsv.gatashop.model.Order;
 import es.upm.dit.apsv.gatashop.model.OrderDetail;
+import es.upm.dit.apsv.gatashop.model.Product;
 
 public class OrderDetailDAOImplementation implements OrderDetailDAO {
 
@@ -35,12 +37,12 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 	}
 
 	@Override
-	public OrderDetail read(String orderDetailID) throws Exception{
+	public OrderDetail read(Long id) throws Exception{
 		OrderDetail o = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			o = session.get(OrderDetail.class, orderDetailID);
+			o = session.get(OrderDetail.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -84,7 +86,7 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			o = (List<OrderDetail>)(session.createQuery("from OrderDetails").list());
+			o = session.createQuery("FROM OrderDetail").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -95,14 +97,13 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderDetail> readAllByOrder(String orderID) {
+	public List<OrderDetail> readAllByOrder(Order order) {
 		List<OrderDetail> orderDetails = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
-		Query q = session.createQuery("SELECT o "
-				+ "FROM Orders o, OrderDetails oD "
-				+ "WHERE o.orderID=\"" + orderID + "\" "
-						+ "AND o.orderID=oD.orderID);");
+		Query q = session.createQuery("SELECT oD "
+				+ "FROM Order o, OrderDetail oD "
+				+ "WHERE o.orders=\"" + order.getId() + ";");
 		
 		orderDetails = q.getResultList();
 		session.getTransaction().commit();
@@ -112,14 +113,13 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderDetail> readAllByProduct(String productID) {
+	public List<OrderDetail> readAllByProduct(Product product) {
 		List<OrderDetail> orderDetails = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT oD "
-				+ "FROM Products p, OrderDetails oD "
-				+ "WHERE p.productID=\"" + productID + "\" "
-						+ "AND p.productID=oD.productID);");
+				+ "FROM Product p, OrderDetail oD "
+				+ "WHERE p.ID=\"" + product.getId() + ";");
 		
 		orderDetails = q.getResultList();
 		session.getTransaction().commit();

@@ -33,12 +33,12 @@ public class SupplierDAOImplementation implements SupplierDAO {
 	}
 
 	@Override
-	public Supplier read(String supplierID) throws Exception{
+	public Supplier read(Long id) throws Exception{
 		Supplier s = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = session.get(Supplier.class, supplierID);
+			s = session.get(Supplier.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -82,7 +82,7 @@ public class SupplierDAOImplementation implements SupplierDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = (List<Supplier>)(session.createQuery("from Suppliers").list());
+			s = session.createQuery("FROM Supplier").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,19 +21,21 @@ public class Product implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String name;
 	private String unit;
 	private double price;
 	
 	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "suppliedProducts", insertable=true, updatable=false)
 	private Supplier supplier;
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
 	private List<OrderDetail> orderDetails;
 	
 	@ManyToMany
+	@JoinColumn(name = "productsAssociated", insertable=true, updatable=false)
 	private List<Category> categories;
 	
 	@ManyToMany(mappedBy = "cart", fetch = FetchType.EAGER)
@@ -104,11 +107,9 @@ public class Product implements Serializable{
 	//toString//
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", supplier=" + supplier + ", unit=" + unit + 
-				", price=" + price + ", orderDetails=" + orderDetails +", categories=" + categories + 
-				", customers=" + customers + "]";
+		return "Product [id=" + id + ", name=" + name + ", unit=" + unit + ", price=" + price + ", supplier=" + supplier
+				+ ", orderDetails=" + orderDetails + ", categories=" + categories + ", customers=" + customers + "]";
 	}
-
 
 
 	//HashCode//

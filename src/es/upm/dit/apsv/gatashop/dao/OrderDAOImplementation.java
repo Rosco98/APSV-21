@@ -6,7 +6,9 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
+import es.upm.dit.apsv.gatashop.model.Client;
 import es.upm.dit.apsv.gatashop.model.Order;
+import es.upm.dit.apsv.gatashop.model.Shipper;
 
 public class OrderDAOImplementation implements OrderDAO {
 
@@ -35,12 +37,12 @@ public class OrderDAOImplementation implements OrderDAO {
 	}
 
 	@Override
-	public Order read(String orderID) throws Exception{
+	public Order read(Long id) throws Exception{
 		Order o = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			o = session.get(Order.class, orderID);
+			o = session.get(Order.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -84,7 +86,7 @@ public class OrderDAOImplementation implements OrderDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			o = (List<Order>)(session.createQuery("from Orders").list());
+			o = session.createQuery("from Order").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -95,14 +97,13 @@ public class OrderDAOImplementation implements OrderDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Order> readAllByClient(String clientID) {
+	public List<Order> readAllByClient(Client client) {
 		List<Order> orders = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT o "
-				+ "FROM Orders o, Clients c "
-				+ "WHERE c.clientID=\"" + clientID + "\" "
-						+ "AND o.clientID=c.clientID);");
+				+ "FROM Order o, Client c "
+				+ "WHERE o.orders=" + client.getId() + ";");
 		
 		orders = q.getResultList();
 		session.getTransaction().commit();
@@ -112,14 +113,13 @@ public class OrderDAOImplementation implements OrderDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Order> readAllByShipper(String shipperID) {
+	public List<Order> readAllByShipper(Shipper shipper) {
 		List<Order> orders = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT o "
-				+ "FROM Orders o, Shippers s "
-				+ "WHERE s.shipperID=\"" + shipperID + "\" "
-						+ "AND o.shipperID=s.shipperID);");
+				+ "FROM Order o, Client c "
+				+ "WHERE o.orders=" + shipper.getId() + ";");
 		
 		orders = q.getResultList();
 		session.getTransaction().commit();

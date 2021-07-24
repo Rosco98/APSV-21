@@ -32,12 +32,12 @@ public class ClientDAOImplementation implements ClientDAO {
 	}
 
 	@Override
-	public Client read(String clientID) throws Exception{
+	public Client read(Long id) throws Exception{
 		Client c = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = session.get(Client.class, clientID);
+			c = session.get(Client.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -81,7 +81,7 @@ public class ClientDAOImplementation implements ClientDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = (List<Client>)(session.createQuery("from Clients").list());
+			c = session.createQuery("FROM Client").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

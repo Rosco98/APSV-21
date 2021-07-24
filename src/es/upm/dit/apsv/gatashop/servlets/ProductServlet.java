@@ -18,16 +18,16 @@ import es.upm.dit.apsv.gatashop.dao.SessionFactoryService;
 import es.upm.dit.apsv.gatashop.model.Product;
 
 /**
- * Servlet implementation class ProductsList
+ * Servlet implementation class Product
  */
-@WebServlet("/ProductsListServlet")
-public class ProductsListServlet extends HttpServlet {
+@WebServlet("/ProductServlet")
+public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductsListServlet() {
+    public ProductServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,12 +37,13 @@ public class ProductsListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.getSession().setAttribute("listProducts",ProductDAOImplementation.getInstance().readAll());
+			Long productID = Long.valueOf(request.getParameter("productID"));
+			request.getSession().setAttribute("product",ProductDAOImplementation.getInstance().read(productID));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getServletContext().getRequestDispatcher("/Products.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/Product.jsp").forward(request, response);
 	}
 
 	/**
