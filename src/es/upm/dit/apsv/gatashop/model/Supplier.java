@@ -24,6 +24,7 @@ public class Supplier implements Serializable {
 	private String name;
 	private String contactName;
 	private String email;
+	private String password;
 	private String phone;
 	private String country;
 	private String city;
@@ -54,6 +55,9 @@ public class Supplier implements Serializable {
 	}
 	public String getEmail() {
 		return email;
+	}
+	public String getPassword() {
+		return password;
 	}
 	public String getPhone() {
 		return phone;
@@ -88,6 +92,9 @@ public class Supplier implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
@@ -112,8 +119,8 @@ public class Supplier implements Serializable {
 	@Override
 	public String toString() {
 		return "Supplier [id=" + id + ", name=" + name + ", contactName=" + contactName + ", email=" + email
-				+ ", phone=" + phone + ", country=" + country + ", city=" + city + ", address=" + address
-				+ ", postalCode=" + postalCode + ", suppliedProducts=" + suppliedProducts + "]";
+				+ ", password=" + password + ", phone=" + phone + ", country=" + country + ", city=" + city + 
+				", address=" + address + ", postalCode=" + postalCode + ", suppliedProducts=" + suppliedProducts + "]";
 	}
 
 
@@ -127,6 +134,7 @@ public class Supplier implements Serializable {
 		result = prime * result + ((contactName == null) ? 0 : contactName.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
@@ -169,6 +177,11 @@ public class Supplier implements Serializable {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		if (name == null) {
 			if (other.name != null)

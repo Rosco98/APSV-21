@@ -15,7 +15,7 @@
 	
 								 <!-- update, mantiene y actualiza los datos añadidos-->
 								 <!-- create, elimina las tablas y las crea de cero-->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 		
 		<mapping class="es.upm.dit.apsv.gatashop.model.Category" />
 		<mapping class="es.upm.dit.apsv.gatashop.model.Client" />
@@ -24,6 +24,7 @@
 		<mapping class="es.upm.dit.apsv.gatashop.model.Product" />
 		<mapping class="es.upm.dit.apsv.gatashop.model.Shipper" />
 		<mapping class="es.upm.dit.apsv.gatashop.model.Supplier" />
+		<mapping class="es.upm.dit.apsv.gatashop.model.Area" />
 		
 		
 	</session-factory>

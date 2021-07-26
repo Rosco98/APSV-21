@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import es.upm.dit.apsv.gatashop.model.Client;
 import es.upm.dit.apsv.gatashop.model.Shipper;
 
 public class ShipperDAOImplementation implements ShipperDAO {
@@ -34,17 +35,17 @@ public class ShipperDAOImplementation implements ShipperDAO {
 
 	@Override
 	public Shipper read(Long id) throws Exception{
-		Shipper s = null;
+		Shipper sh = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = session.get(Shipper.class, id);
+			sh = session.get(Shipper.class, id);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
 			session.close();
 		}		
-		return s;
+		return sh;
 	}
 
 	@Override
@@ -78,17 +79,32 @@ public class ShipperDAOImplementation implements ShipperDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Shipper> readAll() {
-		List<Shipper> s = null;
+		List<Shipper> sh = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = session.createQuery("FROM Shipper").getResultList();
+			sh = session.createQuery("FROM Shipper").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
 			session.close();
 		}		
-		return s;
+		return sh;
+	}
+	@Override
+	public Shipper login(String email, String password) throws Exception {
+		Shipper sh = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			sh = (Shipper) session.createQuery("FROM Shipper sh WHERE sh.EMAIL=\'" + email
+					+ "\' sh.PASSWORD=\'" + password + "\';").getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return sh;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import es.upm.dit.apsv.gatashop.model.Client;
 import es.upm.dit.apsv.gatashop.model.Supplier;
 
 public class SupplierDAOImplementation implements SupplierDAO {
@@ -83,6 +84,21 @@ public class SupplierDAOImplementation implements SupplierDAO {
 		try {
 			session.beginTransaction();
 			s = session.createQuery("FROM Supplier").getResultList();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return s;
+	}
+	@Override
+	public Supplier login(String email, String password) throws Exception {
+		Supplier s = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			s = (Supplier) session.createQuery("FROM Supplier s WHERE s.EMAIL=\'" + email
+					+ "\' s.PASSWORD=\'" + password + "\';").getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

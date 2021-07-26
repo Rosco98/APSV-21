@@ -12,4 +12,6 @@ public interface ShipperDAO {
 	public Shipper delete (Shipper shipper) throws Exception;
 
 	public List<Shipper> readAll();
+	public Shipper login(String email, String password) throws Exception;
+
 }

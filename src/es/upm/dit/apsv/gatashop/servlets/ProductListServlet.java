@@ -20,14 +20,14 @@ import es.upm.dit.apsv.gatashop.model.Product;
 /**
  * Servlet implementation class ProductsList
  */
-@WebServlet("/ProductsListServlet")
-public class ProductsListServlet extends HttpServlet {
+@WebServlet("/ProductListServlet")
+public class ProductListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductsListServlet() {
+    public ProductListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,7 +42,7 @@ public class ProductsListServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getServletContext().getRequestDispatcher("/Products.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request,response);
 	}
 
 	/**

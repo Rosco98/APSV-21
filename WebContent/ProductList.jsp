@@ -6,7 +6,7 @@
 <title>Products</title>
 </head>
 <body>
-	<h1>Products</h1>
+	<h1>Product List</h1>
 	<table border="1">
 		<tr>
 			<th>Name</th>
@@ -21,7 +21,7 @@
 				<td>${listProductsi.price}</td>
 				<td>
 					<form action="ProductServlet" method="get">
-						<input type="submit" id="productID" name="productID" value="${listProductsi.id}">
+						<input type="hidden" id="productID" name="productID" value="${listProductsi.id}">
 					</form>
 				</td>
 			</tr>

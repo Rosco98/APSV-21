@@ -105,5 +105,21 @@ public class ClientDAOImplementation implements ClientDAO {
 				return c;
 		return null;
 	}
+	
+	@Override
+	public Client login(String email, String password) throws Exception {
+		Client c = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			c = (Client) session.createQuery("FROM Client c WHERE c.EMAIL=\'" + email
+					+ "\' c.PASSWORD=\'" + password + "\';").getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return c;
+	}
 
 }

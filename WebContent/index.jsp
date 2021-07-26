@@ -11,17 +11,19 @@
 <body>
 	<h2>HOLA</h2>
 	
-	<form action="ProductsListServlet">
+	<form action="ProductListServlet" method="get">
 		<button type="submit">Vamos</button>
 	</form>
 	
+		<h2>Sign in</h2>
+	<%@ include file="FormLogin.jsp"%>
 	
 	<% int i = 0; %>
 
 	<!-- Al hacer la tabla de productos, recordar usar funciones iterator, no array -->
 
 	<h2>Tabla de productos</h2>
-	<form action="ProductsListServlet" method="get">
+	<form action="ProductListServlet" method="get">
 		<table border="1">
 			<c:forEach items="${listProducts}" var="listProductsi">
 				<tr>

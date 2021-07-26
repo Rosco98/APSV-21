@@ -3,11 +3,13 @@ package es.upm.dit.apsv.gatashop.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -22,9 +24,15 @@ public class Shipper implements Serializable{
 	private String name;
 	private String phone;
 	private String email;
-	
+	private String password;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Area> areas;
+
 	@OneToMany(mappedBy = "shipper", fetch = FetchType.EAGER)
 	private List<Order> shipments;
+	
+	
 	
 	
 	//Constructor//
@@ -48,7 +56,13 @@ public class Shipper implements Serializable{
 	}
 	public String getEmail() {
 		return email;
-	}	
+	}
+	public String getPassword() {
+		return password;
+	}
+	public List<Area> getAreas() {
+		return areas;
+	}
 	public List<Order> getShipments() {
 		return shipments;
 	}
@@ -67,6 +81,12 @@ public class Shipper implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setAreas(List<Area> areas) {
+		this.areas = areas;
+	}
 	public void setShipments(List<Order> shipments) {
 		this.shipments = shipments;
 	}
@@ -76,7 +96,7 @@ public class Shipper implements Serializable{
 	@Override
 	public String toString() {
 		return "Suppliers [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + 
-				", shipments=" + shipments + "]";
+				", password=" + password + ", areas=" + areas + ", shipments=" + shipments + "]";
 	}
 
 	//HashCode//
@@ -85,9 +105,11 @@ public class Shipper implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((areas == null) ? 0 : areas.hashCode());
 		result = prime * result + ((shipments == null) ? 0 : shipments.hashCode());
 		return result;
 	}
@@ -107,6 +129,11 @@ public class Shipper implements Serializable{
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -121,6 +148,11 @@ public class Shipper implements Serializable{
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (areas == null) {
+			if (other.areas != null)
+				return false;
+		} else if (!areas.equals(other.areas))
 			return false;
 		if (shipments == null) {
 			if (other.shipments != null)
