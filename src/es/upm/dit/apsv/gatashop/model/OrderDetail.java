@@ -21,11 +21,23 @@ public class OrderDetail implements Serializable{
 	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private int quantity;
-	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "details", insertable=true, updatable=false)
+	
+	@ManyToOne (cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	}) //It only works when insertable=true but with a Unique index or primary key violation Error//
+	@JoinColumn(insertable=true, updatable=true)
 	private Order order;
-	@ManyToOne
-	@JoinColumn(name = "orderDetails", insertable=true, updatable=false)
+	
+	@ManyToOne (cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
+	@JoinColumn(insertable=false, updatable=true)
 	private Product product;
 	
 	

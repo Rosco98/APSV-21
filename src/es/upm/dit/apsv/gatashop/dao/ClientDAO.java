@@ -3,6 +3,7 @@ package es.upm.dit.apsv.gatashop.dao;
 import java.util.List;
 
 import es.upm.dit.apsv.gatashop.model.Client;
+import es.upm.dit.apsv.gatashop.model.Product;
 import es.upm.dit.apsv.gatashop.model.Shipper;
 
 public interface ClientDAO {
@@ -13,8 +14,9 @@ public interface ClientDAO {
 	public Client delete (Client client) throws Exception;
 
 	public List<Client> readAll();
+	public List<Client> readAllByProductCart(Product product);
 	public Client readByEmail(String email);
 	public Client readByUser(String user);
-	public Client login(String email, String password) throws Exception;
+	public Client login(String email, String password);
 	
 }

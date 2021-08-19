@@ -29,14 +29,25 @@ public class Order implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar orderDate;
 	
-	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<OrderDetail> details;
 	
-	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "orders", insertable=true, updatable=false)
+	@ManyToOne (cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
+	@JoinColumn(insertable=true, updatable=true)
 	private Client client;
-	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "shipments", insertable=true, updatable=false)
+	
+	@ManyToOne (cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
+	@JoinColumn(insertable=true, updatable=true)
 	private Shipper shipper;
 	
 	

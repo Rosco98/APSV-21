@@ -2,9 +2,12 @@ package es.upm.dit.apsv.gatashop.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 
 import es.upm.dit.apsv.gatashop.model.Client;
+import es.upm.dit.apsv.gatashop.model.Product;
 
 public class ClientDAOImplementation implements ClientDAO {
 
@@ -107,13 +110,13 @@ public class ClientDAOImplementation implements ClientDAO {
 	}
 	
 	@Override
-	public Client login(String email, String password) throws Exception {
+	public Client login(String email, String password) {
 		Client c = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			c = (Client) session.createQuery("FROM Client c WHERE c.EMAIL=\'" + email
-					+ "\' c.PASSWORD=\'" + password + "\';").getSingleResult();
+			c = (Client) session.createQuery("FROM Client c WHERE c.email=\'" + email
+					+ "\' AND c.password=\'" + password + "\'").getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -121,5 +124,23 @@ public class ClientDAOImplementation implements ClientDAO {
 		}		
 		return c;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Client> readAllByProductCart(Product product) {
+		List<Client> clients = null;
+		Session session = SessionFactoryService.get().openSession();
+		session.beginTransaction();
+		Query q = session.createQuery("SELECT c FROM Client c "
+				+ "JOIN c.cart p "
+				+ "WHERE p.id=\'" + product.getId() + "\'"); 
+
+		
+		clients = q.getResultList();
+		session.getTransaction().commit();
+		session.close();
+		return clients;
+	}
+
 
 }

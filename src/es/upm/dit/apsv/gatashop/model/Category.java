@@ -23,7 +23,12 @@ public class Category implements Serializable{
 	private String name;
 	private String description;
 
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER, cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
 	private List<Product> productsAssociated;
 	
 	//Constructor//

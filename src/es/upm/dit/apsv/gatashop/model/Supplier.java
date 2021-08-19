@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 @Entity
 @Table(name="SUPPLIERS")
@@ -31,7 +33,12 @@ public class Supplier implements Serializable {
 	private String address;
 	private String postalCode;
 	
-	@OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="supplier", fetch = FetchType.EAGER, cascade = {
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
 	private List<Product> suppliedProducts;
 
 	//Constructor//

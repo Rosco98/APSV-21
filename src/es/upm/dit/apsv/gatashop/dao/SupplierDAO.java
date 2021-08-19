@@ -12,5 +12,5 @@ public interface SupplierDAO {
 	public Supplier delete (Supplier supplier) throws Exception;
 
 	public List<Supplier> readAll();
-	public Supplier login(String email, String password) throws Exception;
+	public Supplier login(String email, String password);
 }

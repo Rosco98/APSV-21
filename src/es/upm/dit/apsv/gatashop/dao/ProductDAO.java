@@ -13,7 +13,8 @@ public interface ProductDAO {
 	public Product update (Product product) throws Exception;
 	public Product delete (Product product) throws Exception;
 
-	public List<Product> readAll() throws Exception;
+	public List<Product> readAll();
+	public List<Product> readAvailables();
 	public List<Product> readAllByCategory(Category category);
 	public List<Product> readAllBySupplier(Supplier supplier);
 }

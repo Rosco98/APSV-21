@@ -92,13 +92,13 @@ public class ShipperDAOImplementation implements ShipperDAO {
 		return sh;
 	}
 	@Override
-	public Shipper login(String email, String password) throws Exception {
+	public Shipper login(String email, String password){
 		Shipper sh = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			sh = (Shipper) session.createQuery("FROM Shipper sh WHERE sh.EMAIL=\'" + email
-					+ "\' sh.PASSWORD=\'" + password + "\';").getSingleResult();
+			sh = (Shipper) session.createQuery("FROM Shipper sh WHERE sh.email=\'" + email
+					+ "\' AND sh.password=\'" + password + "\'").getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

@@ -5,23 +5,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 	<title>Bienvenido!</title>
 </head>
 <body>
-	<h2>HOLA</h2>
+	<h2>Gatashop</h2>
 	
 	<form action="ProductListServlet" method="get">
-		<button type="submit">Vamos</button>
+		<button type="submit">Products</button>
 	</form>
 	
-		<h2>Sign in</h2>
+	<h2>Log in/Sign in</h2>
 	<%@ include file="FormLogin.jsp"%>
 	
-	<% int i = 0; %>
+	<h2>Supplier</h2>
+	<a href="Supplier.jsp">Supplier</a>
 
-	<!-- Al hacer la tabla de productos, recordar usar funciones iterator, no array -->
-
+	<h2>Shipper</h2>
+	<a href="Shipper.jsp">Shipper</a>
+	
+	
 	<h2>Tabla de productos</h2>
 	<form action="ProductListServlet" method="get">
 		<table border="1">

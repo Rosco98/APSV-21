@@ -26,7 +26,12 @@ public class Shipper implements Serializable{
 	private String email;
 	private String password;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="coveredBy", cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
 	private List<Area> areas;
 
 	@OneToMany(mappedBy = "shipper", fetch = FetchType.EAGER)

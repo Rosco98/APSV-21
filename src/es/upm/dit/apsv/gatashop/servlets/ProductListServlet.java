@@ -15,6 +15,7 @@ import org.hibernate.Session;
 
 import es.upm.dit.apsv.gatashop.dao.ProductDAOImplementation;
 import es.upm.dit.apsv.gatashop.dao.SessionFactoryService;
+import es.upm.dit.apsv.gatashop.model.Client;
 import es.upm.dit.apsv.gatashop.model.Product;
 
 /**
@@ -37,6 +38,14 @@ public class ProductListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			if(this.getServletContext()==null) {
+				System.out.println("HOLA");
+			}
+			Client client = (Client) request.getSession().getAttribute("client");
+
+			if (client != null) {
+				request.getSession().setAttribute("client",client);
+			}
 			request.getSession().setAttribute("listProducts",ProductDAOImplementation.getInstance().readAll());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

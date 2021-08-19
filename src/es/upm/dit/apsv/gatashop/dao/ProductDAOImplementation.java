@@ -82,12 +82,28 @@ public class ProductDAOImplementation implements ProductDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> readAll() throws Exception{
+	public List<Product> readAll() {
 		List<Product> p = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
 			p = session.createQuery("FROM Product").getResultList();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+		} finally {
+			session.close();
+		}		
+		return p;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> readAvailables() {
+		List<Product> p = null;
+		Session session = SessionFactoryService.get().openSession();
+		try {
+			session.beginTransaction();
+			p = session.createQuery("FROM Product p WHERE p.available=true").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
@@ -104,7 +120,7 @@ public class ProductDAOImplementation implements ProductDAO {
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT p "
 				+ "FROM Product p, Category c "
-				+ "WHERE c.ID=\"" + category.getId() + ";");
+				+ "WHERE c.id=\"" + category.getId() + ";");
 		
 		products = q.getResultList();
 		session.getTransaction().commit();
@@ -112,6 +128,7 @@ public class ProductDAOImplementation implements ProductDAO {
 		return products;
 	}
 
+	//FUNCIONA//
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> readAllBySupplier(Supplier supplier) {
@@ -119,13 +136,14 @@ public class ProductDAOImplementation implements ProductDAO {
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT p "
-				+ "FROM Product p, Supplier s "
-				+ "WHERE s.id=\"" + supplier.getId() + ";");
+				+ "FROM Product p "
+				+ "WHERE supplier_id=\'" + supplier.getId() + "\'");
 		
 		products = q.getResultList();
 		session.getTransaction().commit();
 		session.close();
 		return products;
 	}
+	
 
 }

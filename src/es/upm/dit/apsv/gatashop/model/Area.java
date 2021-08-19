@@ -3,6 +3,7 @@ package es.upm.dit.apsv.gatashop.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,7 +22,12 @@ public class Area implements Serializable{
 	private String description;
 	private double price;
 	
-	@ManyToMany(mappedBy="areas", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {		
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
 	private List<Shipper> coveredBy;
 
 	

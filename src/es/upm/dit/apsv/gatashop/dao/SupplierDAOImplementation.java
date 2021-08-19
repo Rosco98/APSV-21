@@ -92,13 +92,13 @@ public class SupplierDAOImplementation implements SupplierDAO {
 		return s;
 	}
 	@Override
-	public Supplier login(String email, String password) throws Exception {
+	public Supplier login(String email, String password){
 		Supplier s = null;
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			s = (Supplier) session.createQuery("FROM Supplier s WHERE s.EMAIL=\'" + email
-					+ "\' s.PASSWORD=\'" + password + "\';").getSingleResult();
+			s = (Supplier) session.createQuery("FROM Supplier s WHERE s.email=\'" + email
+					+ "\' AND s.password=\'" + password + "\'").getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {

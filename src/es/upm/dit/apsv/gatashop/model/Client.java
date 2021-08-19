@@ -28,14 +28,19 @@ public class Client implements Serializable{
 	private String password;
 	private String country;
 	private String city;
+	@JoinColumn(name="dddek")
 	private String address;
 	private String postalCode;
 	
-	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Order> orders;
 	
-	@ManyToMany (cascade = CascadeType.ALL)
-	@JoinColumn(name = "customers", insertable=true, updatable=false)
+	@ManyToMany (fetch = FetchType.EAGER, cascade = {		
+						CascadeType.DETACH,
+						CascadeType.MERGE,
+						CascadeType.PERSIST,
+						CascadeType.REFRESH
+				})
 	private List<Product> cart;
 	
 	
