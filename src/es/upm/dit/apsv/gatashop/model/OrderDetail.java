@@ -37,7 +37,7 @@ public class OrderDetail implements Serializable{
 			CascadeType.PERSIST,
 			CascadeType.REFRESH
 	})
-	@JoinColumn(insertable=false, updatable=true)
+	@JoinColumn(insertable=true, updatable=true)
 	private Product product;
 	
 	

@@ -134,7 +134,6 @@ public class ClientDAOImplementation implements ClientDAO {
 		Query q = session.createQuery("SELECT c FROM Client c "
 				+ "JOIN c.cart p "
 				+ "WHERE p.id=\'" + product.getId() + "\'"); 
-
 		
 		clients = q.getResultList();
 		session.getTransaction().commit();

@@ -1,5 +1,7 @@
 package es.upm.dit.apsv.gatashop.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -109,5 +111,41 @@ public class CategoryDAOImplementation implements CategoryDAO {
 		session.close();
 		return categories;
 	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, List<Long>> countProductsByCategory() {
+		// SELECT COUNT(PRODUCTSASSOCIATED_ID), CATEGORIES_ID  FROM PRODUCTS_CATEGORIES GROUP BY CATEGORIES_ID
+		HashMap<String, List<Long>> count_CategoriesID = new HashMap<String, List<Long>>();;
+		Session session = SessionFactoryService.get().openSession();
+		session.beginTransaction();
+		
+		/*
+		"SELECT c FROM Client c "
+		+ "JOIN c.cart p "
+		+ "WHERE p.id=\'" + product.getId() + "\'"); 
+		*/
+				
+		Query q1 = session.createQuery("SELECT count(pAs) FROM Category cat " 
+				+ "JOIN cat.productsAssociated pAs "
+				+ "GROUP BY cat.id "
+				+ "ORDER BY cat.id ASC");
+		
+		Query q2 = session.createQuery("SELECT cat.id FROM Category cat "
+				+ "JOIN cat.productsAssociated pAs "
+				+ "GROUP BY cat.id "
+				+ "ORDER BY cat.id ASC");
+
+		
+		List<Long> count = q1.getResultList();
+		List<Long> categoriesID = q2.getResultList();
+		
+		count_CategoriesID.put("count", count);
+		count_CategoriesID.put("categoriesID", categoriesID);
+		session.getTransaction().commit();
+		session.close();
+		return count_CategoriesID;
+	}	
 
 }

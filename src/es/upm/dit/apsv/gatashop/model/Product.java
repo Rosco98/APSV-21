@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 //AAAAAAAAAAAAAAAAAAAAAA
 @Entity
 @Table(name="PRODUCTS")
@@ -46,6 +49,7 @@ public class Product implements Serializable{
 	private List<OrderDetail> orderDetails;
 	
 	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(insertable=false, updatable=false)
 	private List<Category> categories;
 	

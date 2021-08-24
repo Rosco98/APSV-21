@@ -118,9 +118,10 @@ public class ProductDAOImplementation implements ProductDAO {
 		List<Product> products = null;
 		Session session = SessionFactoryService.get().openSession();
 		session.beginTransaction();
-		Query q = session.createQuery("SELECT p "
-				+ "FROM Product p, Category c "
-				+ "WHERE c.id=\"" + category.getId() + ";");
+		Query q = session.createQuery("SELECT pAs FROM Category cat " 
+						+ "JOIN cat.productsAssociated pAs "
+						+ "WHERE cat.id=\'" + category.getId() + "\'");
+						
 		
 		products = q.getResultList();
 		session.getTransaction().commit();

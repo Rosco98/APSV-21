@@ -32,10 +32,14 @@ public class Database_installation {
 			Product p1 = new Product();
 			Product p2 = new Product();
 			Product p3 = new Product();
+			Product p4 = new Product();
 			Supplier s1 = new Supplier();
 			Supplier s2 = new Supplier();
 			OrderDetail od1 = new OrderDetail();
+			OrderDetail od2 = new OrderDetail();
+			OrderDetail od3 = new OrderDetail();
 			Order o1 = new Order();
+			Order o2 = new Order();
 			Client c1 = new Client();
 			Client c2 = new Client();
 			Client c3 = new Client();
@@ -96,6 +100,16 @@ public class Database_installation {
 			categories3.add(cat1);
 			p3.setCategories(categories3);
 			
+			p4.setId((long) (Math.random()*10000));
+			p4.setName("Mango");
+			p4.setPrice(5);
+			p4.setUnit("1 unidad");
+			p4.setAvailable(true);
+			p4.setSupplier(s1);
+			List<Category> categories4 = new ArrayList();
+			categories4.add(cat1);
+			p4.setCategories(categories4);
+			
 			
 			
 			//Supplier//
@@ -135,15 +149,33 @@ public class Database_installation {
 			od1.setProduct(p1);
 			od1.setQuantity(1);
 			
+			od2.setId((long) (Math.random()*10000));
+			od2.setOrder(o2);
+			od2.setProduct(p4);
+			od2.setQuantity(3);
+			
+			od3.setId((long) (Math.random()*10000));
+			od3.setOrder(o1);
+			od3.setProduct(p2);
+			od3.setQuantity(1);
+			
 			
 			//Order//
 			o1.setId((long) (Math.random()*10000));
 			o1.setOrderDate(java.util.Calendar.getInstance());
 			o1.setClient(c1);
 			o1.setShipper(sh1);
-			List<OrderDetail> orderDetails = new ArrayList();
-			orderDetails.add(od1);
-			o1.setDetails(orderDetails);
+			List<OrderDetail> orderDetails1 = new ArrayList();
+			orderDetails1.add(od1);
+			o1.setDetails(orderDetails1);
+			
+			o2.setId((long) (Math.random()*10000));
+			o2.setOrderDate(java.util.Calendar.getInstance());
+			o2.setClient(c2);
+			o2.setShipper(sh2);
+			List<OrderDetail> orderDetails2 = new ArrayList();
+			orderDetails2.add(od2);
+			o2.setDetails(orderDetails2);
 			
 			
 			
@@ -223,6 +255,7 @@ public class Database_installation {
 			ProductDAOImplementation.getInstance().create(p1);
 			ProductDAOImplementation.getInstance().create(p2);
 			ProductDAOImplementation.getInstance().create(p3);
+			ProductDAOImplementation.getInstance().create(p4);
 			ShipperDAOImplementation.getInstance().create(sh1);
 			ShipperDAOImplementation.getInstance().create(sh2);
 			ClientDAOImplementation.getInstance().create(c1);
@@ -230,7 +263,10 @@ public class Database_installation {
 			ClientDAOImplementation.getInstance().create(c3);
 			AreaDAOImplementation.getInstance().create(a1);
 			OrderDetailDAOImplementation.getInstance().create(od1);
+			OrderDetailDAOImplementation.getInstance().create(od2);
+			OrderDetailDAOImplementation.getInstance().create(od3);
 			OrderDAOImplementation.getInstance().create(o1);
+			OrderDAOImplementation.getInstance().create(o2);
 			
 			/*
 			System.out.println("\n\n\n\n\n\n\n");

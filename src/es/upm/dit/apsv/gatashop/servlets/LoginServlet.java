@@ -1,6 +1,7 @@
 package es.upm.dit.apsv.gatashop.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -93,6 +94,8 @@ public class LoginServlet extends HttpServlet {
 			
 			List<Category> categories = (List<Category>) CategoryDAOImplementation.getInstance().readAll();
 			request.getSession().setAttribute("categories", categories);
+			HashMap<String,List<Long>> count_CategoriesID = (HashMap<String,List<Long>>) CategoryDAOImplementation.getInstance().countProductsByCategory();
+			request.getSession().setAttribute("count_CategoriesID", count_CategoriesID);
 
 			
 			getServletContext().getRequestDispatcher("/Admin.jsp").forward(request,response);

@@ -28,7 +28,6 @@ public class Client implements Serializable{
 	private String password;
 	private String country;
 	private String city;
-	@JoinColumn(name="dddek")
 	private String address;
 	private String postalCode;
 	

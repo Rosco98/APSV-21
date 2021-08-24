@@ -14,13 +14,14 @@
 <body>
 	<h2>Admin</h2>
 	<p> <b>Number of products: </b>${fn:length(products)}</p>
-	<p> <b>&nbspAvailable: </b>${fn:length(availableProducts)}</p>
+	<p> <b>&nbsp Available: </b>${fn:length(availableProducts)}</p>
 	<p> <b>Number of clients: </b>${fn:length(clients)}</p>
 	<p> <b>Number of suppliers: </b>${fn:length(suppliers)}</p>
 	<p> <b>Number of shippers: </b>${fn:length(shippers)}</p>
 	<p> <b>Number of OrderDetails: </b>${fn:length(orderDetails)}</p>
 	
 	<!-- Products Table -->
+	<h3>Products</h3>
 	<table border="1">
 		<tr>
 			<th>Name</th>
@@ -52,7 +53,8 @@
 	<p></p>
 	<p></p>
 	
-	<!-- Suppliers Table -->	
+	<!-- Suppliers Table -->
+	<h3>Suppliers</h3>	
 	<table border="1">
 		<tr>
 			<th>Name</th>
@@ -87,6 +89,7 @@
 	<p></p>
 	
 	<!-- Shippers Table -->
+	<h3>Shippers</h3>
 	<table border="1">
 		<tr>
 			<th>Name</th>
@@ -111,6 +114,7 @@
 	<p></p>
 	
 	<!-- Clients Table -->
+	<h3>Clients</h3>
 	<table border="1">
 		<tr>
 			<th>User</th>
@@ -137,8 +141,117 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<p></p>
+	<p></p>
 	
 	
+	
+	<!-- Orders Table -->
+	<h3>Orders</h3>
+	<table border="1">
+		<tr>
+			<th>orderDate</th>
+			<th>Client</th>
+			<th>Shipper</th>
+			<th>Remove</th>
+		</tr>
+		<c:forEach items="${orders}" var="ordersi">
+			<tr>
+				<td>${ordersi.orderDate.getTime()}</td>
+				<td>${ordersi.client.user}</td>
+				<td>${ordersi.shipper.name}</td>
+				
+				<td> 	<form action="RemoveServlet" method="get">
+							<input type="submit" id="orderID" name="orderID" value="${ordersi.id}">
+						</form>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<p></p>
+	<p></p>
+
+	<!-- OrderDetails Table -->
+	<h3>Order Details</h3>
+	<table border="1">
+		<tr>
+			<th>Product</th>
+			<th>Quantity</th>
+			<th>Order</th>
+			<th>Remove</th>
+		</tr>
+		<c:forEach items="${orderDetails}" var="orderDetailsi">
+			<tr>
+				<td>${orderDetailsi.product.name}</td>
+				<td>${orderDetailsi.quantity}</td>
+				<td>${orderDetailsi.order.id}</td>
+				
+				<td> 	<form action="RemoveServlet" method="get">
+							<input type="submit" id="orderDetailID" name="orderDetailID" value="${orderDetailsi.id}">
+						</form>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<p></p>
+	<p></p>
+
+	
+	<!-- Categories Table -->
+	<h3>Categories</h3>
+	<table border="1">
+		<tr>
+			<th>Description</th>
+			<th>Name</th>
+			<th>Number products</th>
+			<th>Remove</th>
+		</tr>
+		
+		<c:set var="index" value="${0}" scope="page" />
+		<c:forEach items="${categories}" var="categoriesi">
+			<tr>
+				<td>${categoriesi.description}</td>
+				<td>${categoriesi.name}</td>
+				
+				<c:set var="count" value="${count_CategoriesID.get(\"count\")}" scope="page" />
+				<c:set var="categoriesID" value="${count_CategoriesID.get(\"categoriesID\")}" scope="page" />
+
+				<!-- Look if the number of categoriesID=0 (not products tagged with this category -->
+				<!-- and if is full the table with 0's, if not, it finds with are the one's not used -->
+				<!-- and full the table with 0's if is the case -->
+				<c:choose>
+					<c:when test="${categoriesID.isEmpty()}">
+						<td>0</td>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${categoriesID}" var="categoriesIDi">
+							<c:choose>
+								<c:when test="${categoriesi.id==categoriesIDi}">
+									<td>${count.get(index)}</td>
+								</c:when>
+								<c:otherwise>
+									<td>0</td>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+
+
+
+				<td>	<form action="RemoveServlet" method="get">
+							<input type="submit" id="categoryID" name="categoryID" value="${categoriesi.id}">
+						</form>
+				</td>
+				
+				<c:set var="index" value="${index+1}" scope="page" />
+			</tr>
+		</c:forEach>
+	</table>
+	<p></p>
+	<p></p>
+
+
 	<!-- Log out -->
 	<%@ include file="FormLogout.jsp"%>
 	

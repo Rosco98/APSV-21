@@ -1,5 +1,6 @@
 package es.upm.dit.apsv.gatashop.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import es.upm.dit.apsv.gatashop.model.Category;
@@ -14,4 +15,6 @@ public interface CategoryDAO {
 
 	public List<Category> readAll();
 	public List<Category> readAllByProduct(Product product);
+	
+	public HashMap<String, List<Long>> countProductsByCategory();
 }

@@ -27,7 +27,8 @@
 		<h2><a href="LoggedClient.jsp">${client.user} </a></h2>
 	</c:if>
 	
-	<img alt="${product.name} photo" src="Images\\banana.jpg">
+	<c:set var="imageLink" value="Images\\${product.name.toLowerCase()}.jpg" scope="page" />
+	<img alt="${product.name} photo not available" src="${imageLink}">
 	
 	<table border="1">
 		<tr>

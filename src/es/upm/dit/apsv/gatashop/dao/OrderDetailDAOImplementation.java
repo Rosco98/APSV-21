@@ -86,7 +86,8 @@ public class OrderDetailDAOImplementation implements OrderDetailDAO {
 		Session session = SessionFactoryService.get().openSession();
 		try {
 			session.beginTransaction();
-			o = session.createQuery("FROM OrderDetail").getResultList();
+			o = session.createQuery("FROM OrderDetail "
+					+ "ORDER BY order_id").getResultList();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 		} finally {
